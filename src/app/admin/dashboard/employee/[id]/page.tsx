@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Navbar } from '@/components/navbar'
 import { getHumanAddress } from '@/lib/geo'
+import { formatTime, formatDate } from '@/lib/timezone'
 
 type LogEntry = {
   id: string;
@@ -107,12 +108,12 @@ export default async function EmployeeHistory({ params }: { params: Promise<{ id
                   {enhancedSessions.map((session) => (
                     <TableRow key={session.id} className="border-gray-50 hover:bg-gray-50/50 transition-colors">
                       <TableCell className="px-10 py-8">
-                         <div className="font-bold text-gray-900 text-sm whitespace-nowrap">{new Date(session.checkIn.logged_at).toLocaleDateString([], { month: 'short', day: 'numeric', weekday: 'short' })}</div>
+                         <div className="font-bold text-gray-900 text-sm whitespace-nowrap">{formatDate(session.checkIn.logged_at, { month: 'short', day: 'numeric', weekday: 'short' })}</div>
                       </TableCell>
                       <TableCell className="max-w-xs">
                         <div className="flex flex-col gap-2">
                            <div className="flex items-center gap-2">
-                              <span className="text-[9px] font-black bg-green-50 text-green-600 px-2 py-0.5 rounded border border-green-100">{new Date(session.checkIn.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                              <span className="text-[9px] font-black bg-green-50 text-green-600 px-2 py-0.5 rounded border border-green-100">{formatTime(session.checkIn.logged_at, { hour: '2-digit', minute: '2-digit' })}</span>
                               <span className="text-xs font-black text-gray-800 tracking-tight">{session.checkInAddress}</span>
                            </div>
                            <p className="text-[11px] text-gray-500 italic leading-relaxed border-l-2 border-gray-100 pl-3">&quot;{session.checkIn.task_description}&quot;</p>
@@ -122,7 +123,7 @@ export default async function EmployeeHistory({ params }: { params: Promise<{ id
                         {session.checkOut ? (
                           <div className="flex flex-col gap-2">
                              <div className="flex items-center gap-2">
-                                <span className="text-[9px] font-black bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">{new Date(session.checkOut.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                <span className="text-[9px] font-black bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">{formatTime(session.checkOut.logged_at, { hour: '2-digit', minute: '2-digit' })}</span>
                                 <span className="text-xs font-black text-gray-800 tracking-tight">{session.checkOutAddress}</span>
                              </div>
                              <p className="text-[11px] text-blue-600 font-bold bg-blue-50/40 px-3 py-1.5 rounded-xl border border-blue-50/50 italic">&quot;{session.checkOut.closing_remarks}&quot;</p>
@@ -152,7 +153,7 @@ export default async function EmployeeHistory({ params }: { params: Promise<{ id
              enhancedSessions.map(session => (
                <div key={session.id} className="bg-white rounded-[2rem] p-6 shadow-xl shadow-gray-200/40 border border-gray-50 space-y-6">
                   <header className="flex items-center justify-between">
-                     <div className="text-sm font-black text-gray-900 uppercase tracking-widest">{new Date(session.checkIn.logged_at).toLocaleDateString([], { month: 'short', day: 'numeric', weekday: 'short' })}</div>
+                     <div className="text-sm font-black text-gray-900 uppercase tracking-widest">{formatDate(session.checkIn.logged_at, { month: 'short', day: 'numeric', weekday: 'short' })}</div>
                      {session.durationMins && <div className="bg-gray-900 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">{Math.floor(session.durationMins / 60)}h {Math.round(session.durationMins % 60)}m</div>}
                   </header>
 
@@ -160,7 +161,7 @@ export default async function EmployeeHistory({ params }: { params: Promise<{ id
                      <div className="space-y-2">
                         <div className="flex items-center gap-2">
                            <span className="text-[9px] font-black bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase">Deployment</span>
-                           <span className="text-[10px] font-black text-gray-400">{new Date(session.checkIn.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                           <span className="text-[10px] font-black text-gray-400">{formatTime(session.checkIn.logged_at, { hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
                         <p className="text-xs font-black text-gray-800 leading-tight">{session.checkInAddress}</p>
                         <p className="text-[11px] text-gray-500 italic bg-gray-50 p-3 rounded-xl">&quot;{session.checkIn.task_description}&quot;</p>
@@ -169,7 +170,7 @@ export default async function EmployeeHistory({ params }: { params: Promise<{ id
                      <div className="space-y-2">
                         <div className="flex items-center gap-2">
                            <span className="text-[9px] font-black bg-blue-100 text-blue-700 px-2 py-0.5 rounded uppercase">Completion</span>
-                           <span className="text-[10px] font-black text-gray-400">{session.checkOut ? new Date(session.checkOut.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}</span>
+                           <span className="text-[10px] font-black text-gray-400">{session.checkOut ? formatTime(session.checkOut.logged_at, { hour: '2-digit', minute: '2-digit' }) : '--:--'}</span>
                         </div>
                         {session.checkOut ? (
                           <>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { logAttendance } from '@/app/actions/attendance'
+import { formatDate } from '@/lib/timezone'
 
 export function AttendanceClient({ initialStatus, fullName }: { initialStatus: string; fullName?: string }) {
   const [loading, setLoading] = useState(false)
@@ -77,7 +78,7 @@ export function AttendanceClient({ initialStatus, fullName }: { initialStatus: s
             {isCheckedIn ? 'End Your Mission' : 'Start Your Mission'}
           </h2>
           <p className="text-sm text-slate-500 font-medium italic">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+            {formatDate(new Date(), { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
         </div>
       </div>

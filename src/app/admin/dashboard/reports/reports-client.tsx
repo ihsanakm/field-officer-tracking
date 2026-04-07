@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Checkbox } from '@/components/ui/CheckboxUI'
 import { getGlobalHistory } from '@/app/actions/admin'
 import { getHumanAddress } from '@/lib/geo'
+import { formatDate, formatTime } from '@/lib/timezone'
 import * as XLSX from 'xlsx'
 
 interface Officer {
@@ -77,9 +78,9 @@ export function ReportsClient({ officers }: { officers: Officer[] }) {
           allSessions.push({
             name: (log.users as any)?.full_name || 'Anonymous',
             email: (log.users as any)?.email || 'Unknown',
-            date: inTime.toLocaleDateString(),
-            checkInTime: inTime.toLocaleTimeString(),
-            checkOutTime: outTime.toLocaleTimeString(),
+            date: formatDate(inTime),
+            checkInTime: formatTime(inTime),
+            checkOutTime: formatTime(outTime),
             durationHours: (duration / 60).toFixed(2),
             task: lastIn.task_description,
             remarks: log.closing_remarks,

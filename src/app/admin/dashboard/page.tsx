@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Navbar } from '@/components/navbar'
+import { formatTime } from '@/lib/timezone'
 import Link from 'next/link'
 
 export default async function AdminDashboard() {
@@ -92,7 +93,7 @@ export default async function AdminDashboard() {
                       }`}>
                         {activity.type === 'check_in' ? 'Check In' : 'Check Out'}
                       </span>
-                      <span className="text-[10px] font-bold text-gray-400">{new Date(activity.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-[10px] font-bold text-gray-400">{formatTime(activity.logged_at, { hour: '2-digit', minute: '2-digit' })}</span>
                    </div>
                    <div className="flex-1">
                       <div className="font-black text-xs text-gray-900 leading-none mb-1">{(activity.users as any)?.full_name || 'Anonymous User'}</div>

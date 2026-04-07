@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { formatTime, formatDate } from '@/lib/timezone'
 
 interface LogEntry {
   id: string
@@ -73,10 +74,10 @@ export function PersonalHistory({ history }: { history: LogEntry[] }) {
                   </span>
                   <div className="flex flex-col whitespace-nowrap">
                     <span className="text-xs font-bold text-gray-900 leading-none mb-1">
-                      {new Date(log.logged_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      {formatTime(log.logged_at, { hour: '2-digit', minute: '2-digit' })}
                     </span>
                     <span className="text-[11px] font-bold text-slate-400 leading-none">
-                      {new Date(log.logged_at).toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' })}
+                      {formatDate(log.logged_at, { weekday: 'short', month: 'short', day: 'numeric' })}
                     </span>
                   </div>
                 </div>
